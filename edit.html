@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 	<title>SquareRoom</title>
-	<link href='styles.css' rel='stylesheet'>
+	<link href='editstyles.css' rel='stylesheet'>
 	<meta charset='UTF-8'>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -11,6 +11,46 @@
 		<span id='pageTitle'>SquareRoom</span>
 		<button id='newRoom'>Create Room</button>
 	</nav>
+	<div id='manipMenu'>
+		<!-- Add and remove objects.
+			Tweak position, rotation, name, and size -->
+		<div id='addItem'>
+			<label>Add an Item</label>
+			<button id='addButton'>Add Item</button>
+			<br>
+			<select id='addDropdown'>
+				Add an object...
+			</select>
+		</div>
+		<div id='changeName'>
+			<label>Object Name</label>
+			<input value='Enter a new name here.'></input>
+		</div>
+		<div id='positioning'>
+			<div id='positionX'>
+				<label>X Position</label>
+				<input value='--.--'></input>
+			</div>
+			<div id='positionY'>
+				<label>Y Position</label>
+				<input value='--.--'></input>
+			</div>
+			<div id='scaleX'>
+				<label value='--.--'>Scale X</label>
+				<input value='--.--'></input>
+			</div>
+			<div id='scaleY'>
+				<label>Scale Y</label>
+				<input value='--.--'></input>
+			</div>
+		</div>
+		<br>
+		<div id='rotation'>
+			<label>Rotation</label>
+			<br>
+			<input value='--.--'></input>
+		</div>
+	</div>
 	<footer>
 		<b>Created by Julian Bundy</b><br>
 		<a href='https://sylintbundy.github.io/capstonePortfolio/'>View my online portfolio here!</a><br>
