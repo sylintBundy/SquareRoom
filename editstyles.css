@@ -1,68 +1,40 @@
-@charset "UTF-8";
-
-body {
-	margin: 0px;
-	padding: 0px;
-}
-
-#topMenu {
-	background-color: #1a1a1a;
-	width: 100%;
-	height: 50px;
-}
-
-#topMenu > span {
-	color: #e6e6e6;
-	font-size: 40px;
-	position: relative;
-	left: 10px;
-}
-
-#newRoom {
-	width: 15%;
-	min-width: 150px;
-	height: 30px;
-	position: relative;
-	float: right;
-	top: 10px;
-	right: 10px;
-	font-size: 20px;
-}
+@charset 'UTF-8';
 
 #manipMenu {
-	margin-top: 50px;
+	margin-top: 25px;
 	margin-left: auto;
 	margin-right: auto;
 	width: 80%;
 }
 
-#positioning > div {
-	position: relative;
+#objectMenu {
+	width: 80%;
+}
+
+#addItem {
+	float: right;
+	width: 15%;
+}
+
+.editRow > div {
+	float: left;
 	width: 25%;
-	height: 40px;
-	background-color: #666666;
 }
 
-#positioning > div > input {
-	width: 100%;
-}
-
-#positionY {
+.editRow > div > label {
 	position: relative;
-	left: 25%;
-	bottom: 40px;
+	width: 80%;
+	left: 10%;
 }
 
-#scaleX {
+.editRow > div > input {
 	position: relative;
-	left: 50%;
-	bottom: 80px;
+	width: 80%;
+	left: 10%;
 }
 
-#scaleY {
-	position: relative;
-	left: 75%;
-	bottom: 120px;
+#elName {
+	width: 50%;
 }
 
 #addItem {
@@ -71,10 +43,4 @@ body {
 
 #addItem > button {
 	float: right;
-}
-
-footer {
-	position: relative;
-	padding: 5px;
-	text-align: center;
 }
