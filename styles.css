@@ -5,10 +5,22 @@ body {
 	padding: 0px;
 }
 
+body > * {
+	font-family: 'Georgia';
+}
+
+h2 {
+	position: relative;
+	left: 10%;
+	width: 80%;
+}
+
 #topMenu {
 	background-color: #deb887;
 	width: 100%;
 	height: 50px;
+	border-bottom-style: solid;
+	border-color: #c4a377;
 }
 
 #topMenu > span {
@@ -16,6 +28,17 @@ body {
 	font-size: 40px;
 	position: relative;
 	left: 10px;
+}
+
+button {
+	background-color: #deb887;
+	border-color: #c4a377;
+	font-family: 'Georgia';
+}
+
+button:hover {
+	background-color: #c4a377;
+	border-color: #ab8e68;
 }
 
 #newRoom {
@@ -33,9 +56,10 @@ footer {
 	position: absolute;
 	width: 100%;
 	top: 100%;
-	bottom: 70px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	text-align: center;
 	background-color: #deb887;
+	border-top-style: solid;
+	border-color: #c4a377;
 }
