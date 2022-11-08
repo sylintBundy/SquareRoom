@@ -33,8 +33,24 @@
 	left: 10%;
 }
 
+.editRow > div > select {
+	position: relative;
+	width: 80%;
+	left: 10%;
+}
+
 #elName {
 	width: 50%;
+}
+
+#elName > label {
+	width: 90%;
+	left: 5%;
+}
+
+#elName > input {
+	width: 90%;
+	left: 5%;
 }
 
 #addItem {
@@ -43,4 +59,15 @@
 
 #addItem > button {
 	float: right;
+}
+
+#changeTools {
+	margin-top: 60px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+}
+
+#changeTools > button {
+	width: 47.5%;
 }
