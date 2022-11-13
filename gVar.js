@@ -1,4 +1,4 @@
-// Script responsible for all classes, variables, and functions that are needed between both pages.
+// Handles all function of data persistence.
 
 // The global variable for all data of each of the user's rooms.
 let db = [];
