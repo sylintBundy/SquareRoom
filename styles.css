@@ -53,9 +53,8 @@ button:hover {
 }
 
 footer {
-	position: absolute;
+	position: relative;
 	width: 100%;
-	top: 100%;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	text-align: center;
