@@ -1,88 +1,65 @@
-let roomMenu = document.getElementById('roomMenu');
+@charset 'UTF-8';
 
-$(function() {
-	pageSetup();
-})
-
-function pageSetup() {
-	refreshList();
+h2 {
+	margin-top: 50px;
+	text-align: center;
 }
 
-function refreshList() {
-	clearList();
-	if (dn == null || dn.length == 0) {
-		var nrText = document.createElement('p');
-		nrText.textContent = 'Looks like you have no rooms! Create one with the "+" button above.';
-		nrText.setAttribute('id', 'noroom');
-		nrText.setAttribute('style', 'text-align:center');
-		roomMenu.appendChild(nrText);
-	} else {
-		for (var room of dn) {
-			var roomBox = document.createElement('div');
-			roomBox.setAttribute('class', 'listedRoom');
-			var nameLabel = document.createElement('label');
-			nameLabel.setAttribute('id', 'rmName');
-			nameLabel.textContent = room;
-			roomBox.appendChild(nameLabel);
-			var buttons = document.createElement('div');
-			buttons.setAttribute('id', 'buttons');
-			roomBox.appendChild(buttons);
-			var editButton = document.createElement('img');
-			editButton.setAttribute('id', 'editBtn');
-			editButton.setAttribute('src', 'assets/edit.png');
-			editButton.setAttribute('width', '50px');
-			editButton.setAttribute('height', '50px');
-			buttons.appendChild(editButton);
-			var deleteButton = document.createElement('img');
-			deleteButton.setAttribute('id', 'deleteBtn');
-			deleteButton.setAttribute('src', 'assets/delete.png');
-			deleteButton.setAttribute('width', '50px');
-			deleteButton.setAttribute('height', '50px');
-			buttons.appendChild(deleteButton);
-			roomMenu.appendChild(roomBox);
-		}
-	}
+#roomMenu {
+	position: relative;
+	top: 0px;
+	margin-top: 150px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
 }
 
-function clearList() {
-	var nrText = document.getElementById('noroom');
-	if (nrText != null) {
-		nrText.remove();
-	}
-	var roomList = document.querySelectorAll('.listedRoom');
-	for (var room of roomList) {
-		room.innerHTML = '';
-		room.remove();
-	}
+#detailBar {
+	background-color: #deb887;
+	width: 100%;
+	height: 40px;
+	border-radius: 5px;
+	color: #1a1a1a;
 }
 
-function linkToEdit(t) {
-
+#nameProp {
+	position: relative;
+	width: 50%;
+	height: 100%;
+	line-height: 40px;
+	font-size: 20px;
+	padding-left: 10px;
 }
 
-function deletePrompt(t) {
-	var target = t.target;
-	if (target.getAttribute('id') == 'deleteBtn') {
-		var roomName = target.parentElement.parentElement.firstElementChild.textContent;
-		if (window.confirm("Do you want to delete room " + roomName + "?")) {
-			deleteRoom(roomName);
-		}
-	}
+#detailBar > button {
+	width: 30px;
+	min-width: 30px;
+	position: relative;
+	float: right;
+	height: 30px;
+	top: 5px;
+	margin-right: 10px;
 }
 
-function deleteRoom(name) {
-	for (var i = 0; i < dn.length; i++) {
-		if (dn[i] == name) {
-			dn.splice(i, 1);
-		}
-	}
-	for (var i = 0; i < db.length; i++) {
-		if (db[i].n == name) {
-			db.splice(i, 1);
-		}
-	}
-	refreshList();
+.listedRoom {
+	position: relative;
+	width: 95%;
+	height: 50px;
+	border-style: solid;
+	line-height: 50px;
+	font-size: 20px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-roomMenu.addEventListener('click', function(t) {linkToEdit(t)});
-roomMenu.addEventListener('click', function(t) {deletePrompt(t)});
+#rmName {
+	position: relative;
+	padding-left: 10px;
+}
+
+#buttons {
+	position: relative;
+	float: right;
+	height: 50px;
+	right: 10px;
+}
