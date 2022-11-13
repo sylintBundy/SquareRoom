@@ -59,6 +59,7 @@ function clearList() {
 function linkToEdit(t) {
 	var target = t.target;
 	if (target.getAttribute('id') == 'editBtn') {
+		console.log("Attempting to redirect to edit page.");
 		var roomName = target.parentElement.parentElement.firstElementChild.textContent;
 		window.location.href = "edit.html";
 	}
