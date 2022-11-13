@@ -60,6 +60,7 @@ function linkToEdit(t) {
 	var target = t.target;
 	if (target.getAttribute('id') == 'editBtn') {
 		var roomName = target.parentElement.parentElement.firstElementChild.textContent;
+		window.location.href = "edit.html";
 	}
 }
 
