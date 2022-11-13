@@ -2,7 +2,7 @@
 
 // The global variable for all data of each of the user's rooms.
 let db = [];
-let	dn = [];
+let dn = [];
 // If the browser doesn't support storage, turn this to true. Can be turn on manually for testing.
 let offline = false;
 
