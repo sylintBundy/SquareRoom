@@ -1,8 +1,8 @@
 // Handles all functions of data persistence, and contains element and color data.
 
 // The global variable for all data of each of the user's rooms.
-let db = [];
-let	dn = {e: []};
+let databaseRooms = [];
+let	databaseNames = {e: []};
 // If the browser doesn't support storage, turn this to true. Can be turn on manually for testing.
 let offline = false;
 
@@ -52,9 +52,9 @@ if (typeof(Storage) == "undefined" && !offline) {
 function iSave() {
 	if (!offline) {
 		var iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage({action: 'save', key: 'dataNames', value: JSON.stringify(dn)}, '*');
-		if (db.length != 0) {
-			for (var room of db) {
+		iframe.contentWindow.postMessage({action: 'save', key: 'dataNames', value: JSON.stringify(databaseNames)}, '*');
+		if (databaseRooms.length != 0) {
+			for (var room of databaseRooms) {
 				iframe.contentWindow.postMessage({action: 'save', key: room.n, value: JSON.stringify(room)}, '*');
 			}
 		}
@@ -81,20 +81,23 @@ function messageHandler(event) {
 	const {action, key, value} = event.data;
 	if (action == 'returnData') {
 		if (key == 'dataNames' && value != null) {
-			dn = JSON.parse(value);
+			databaseNames = JSON.parse(value);
 			var iframe = document.querySelector('iframe');
-			for (var name of dn.e) {
+			for (var name of databaseNames.e) {
 				iframe.contentWindow.postMessage({action: 'get', key: name}, '*');
 			}
 			if ($('#roomMenu') != null) {
 				refreshList();
+			}
+			else {
+
 			}
 		}
 		else if (key == 'dataNames' && value == null) {
 			// Nothing happens here.
 		}
 		else {
-			db.push(value);
+			databaseRooms.push(value);
 		}
 	}
 }
@@ -113,9 +116,9 @@ function addPrompt() {
 }
 
 function createRoom(name) {
-	dn.e.push(name);
-	var databaseRoom = {n: name, e: [], s: {w: 144, h: 120, d: 36}};
-	db.push(databaseRoom);
+	databaseNames.e.push(name);
+	var databaseRoom = {n: name, e: [], s: {w: 144, h: 120}, editing: false};
+	databaseRooms.push(databaseRoom);
 	if (!offline) {
 		iSave();
 	}
@@ -136,14 +139,14 @@ function deletePrompt(t) {
 
 function deleteRoom(name) {
 	iDelete(name);
-	for (var i = 0; i < dn.e.length; i++) {
-		if (dn.e[i] == name) {
-			dn.e.splice(i, 1);
+	for (var i = 0; i < databaseNames.e.length; i++) {
+		if (databaseNames.e[i] == name) {
+			databaseNames.e.splice(i, 1);
 		}
 	}
-	for (var i = 0; i < db.length; i++) {
-		if (db[i].n == name) {
-			db.splice(i, 1);
+	for (var i = 0; i < databaseRooms.length; i++) {
+		if (databaseRooms[i].n == name) {
+			databaseRooms.splice(i, 1);
 		}
 	}
 	iSave();
@@ -151,7 +154,7 @@ function deleteRoom(name) {
 }
 
 function checkRoomExists(name) {
-	for (var room of dn.e) {
+	for (var room of databaseNames.e) {
 		if (room == name) {
 			return true;
 		}
