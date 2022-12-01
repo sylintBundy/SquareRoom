@@ -6,11 +6,22 @@ $(function() {
 })
 
 function pageSetup() {
+	iLoad();
 	refreshOptions();
 	document.getElementById('addItem').addEventListener('click', addElement);
 	var propertyFields = document.querySelectorAll('.propField');
 	for (var field of propertyFields) {
 		field.addEventListener('change', changeElement);
+	}
+}
+
+function loadRoom() {
+	for (var room of databaseRooms) {
+		if (room.editing == true) {
+			room.editing = false;
+			rm = room;
+			break;
+		}
 	}
 }
 
