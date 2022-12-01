@@ -13,14 +13,14 @@ function pageSetup() {
 
 function refreshList() {
 	clearList();
-	if (dn.e == null || dn.e.length == 0) {
+	if (databaseNames.e == null || databaseNames.e.length == 0) {
 		var nrText = document.createElement('p');
 		nrText.textContent = 'Looks like you have no rooms! Create one with the "+" button above.';
 		nrText.setAttribute('id', 'noroom');
 		nrText.setAttribute('style', 'text-align:center');
 		roomMenu.appendChild(nrText);
 	} else {
-		for (var room of dn.e) {
+		for (var room of databaseNames.e) {
 			var roomBox = document.createElement('div');
 			roomBox.setAttribute('class', 'listedRoom');
 			var nameLabel = document.createElement('label');
@@ -63,7 +63,13 @@ function linkToEdit(t) {
 	var target = t.target;
 	if (target.id == 'editBtn') {
 		var roomName = target.parentElement.parentElement.firstElementChild.textContent;
-		window.location.href = "editpage/index.html"
+		for (var room of databaseRooms) {
+			if (room.n == roomName) {
+				room.editing = true;
+			}
+		}
+		iSave();
+		window.location.href = "editpage/index.html";
 	}
 }
 
