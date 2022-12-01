@@ -1,0 +1,83 @@
+@charset 'UTF-8';
+
+#manipMenu {
+	margin-top: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+}
+
+#ojMenu {
+	width: 60%;
+}
+
+#ojMenu > select {
+	width: 100%;
+}
+
+#topRow > div > button {
+	width: 100%;
+}
+
+#topRow > div {
+	float: left;
+}
+
+.editRow > div {
+	float: left;
+	width: 25%;
+}
+
+.editRow > div > * {
+	position: relative;
+	width: 80%;
+	left: 10%;
+}
+
+#elName {
+	width: 50%;
+}
+
+#elName > label {
+	width: 90%;
+	left: 5%;
+}
+
+#elName > input {
+	width: 90%;
+	left: 5%;
+}
+
+.editRow3 > div {
+	float: left;
+	width: 33%;
+}
+
+.editRow3 > div > * {
+	position: relative;
+	width: 80%;
+	left: 10%;
+}
+
+#infoRow > div {
+	position: relative;
+	float: left;
+	width: 25%;
+}
+
+#changeTools {
+	margin-top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+}
+
+#changeTools > button {
+	width: 32%;
+	height: 30px;
+	border-style: none;
+	border-color: #deb887;
+	background-color: #ffffff;
+	border-width: 5px;
+	font-size: 20px;
+}

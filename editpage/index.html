@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<title>SquareRoom</title>
+	<link href='../assets/styles.css' rel='stylesheet'>
+	<link href='editstyles.css' rel='stylesheet'>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src='../assets/jquery-3.2.1.min.js'></script>
+	<script src='../assets/gVar.js'></script>
+	<script src='../assets/p5.js'></script>
+	<script src='canvasVar.js'></script>
+</head>
+<body>
+	<nav id='topMenu'>
+		<span id='pageTitle'>SquareRoom</span>
+		<button id='newRoom'>Create Room</button>
+	</nav>
+	<div id='manipMenu'>
+		<div id='topRow'>
+			<div id='ojMenu'>
+				<label>Add an Object...</label>
+				<br>
+				<select id='objectMenu'></select>
+			</div>
+			<div id='addBtn'>
+				<br>
+				<button id='addItem'>Add</button>
+			</div>
+			<div id='rmvBtn'>
+				<br>
+				<button id='deleteItem'>Remove</button>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class='editRow'>
+			<div id='elName'>
+				<label>Object Name</label>
+				<br>
+				<input id='nameField' class='propField' value='Object Name'>
+			</div>
+			<div id='colors'>
+				<label>Color</label>
+				<br>
+				<select id='colorMenu' class='propField'></select>
+			</div>
+			<div>
+				<label>Rotation</label>
+				<br>
+				<input id='rotationField' class='propField' type='number' value=0>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div class='editRow'>
+			<div>
+				<label>X Position (in)</label>
+				<br>
+				<input id='xPosField' class='propField' type='number' value=0>
+			</div>
+			<div>
+				<label>X Scale</label>
+				<br>
+				<input id='xScaleField' class='propField' type='number' value=1>
+			</div>
+			<div>
+				<label>Y Position (in)</label>
+				<br>
+				<input id='yPosField' class='propField' type='number' value=0>
+			</div>
+			<div>
+				<label>Y Scale</label>
+				<br>
+				<input id='yScaleField' class='propField' type='number' value=1>
+			</div>
+		</div>
+		<!-- <div class='editRow3'>
+			<div id='roomWidth'>
+				<label>Room Width (in)</label>
+				<br>
+				<input id='widthField' class='roomField' type='number'>
+			</div>
+			<div id='roomDepth'>
+				<label>Room Depth (in)</label>
+				<br>
+				<input id='depthField' class='roomField' type='number'>
+			</div>
+			<div id='doorWidth'>
+				<label>Doorframe Width (in)</label>
+				<br>
+				<input id='doorField' class='roomField' type='number'>
+			</div>
+		</div> -->
+		<!-- <label>Click on two points in the canvas to measure the length!</label>
+		<div id='infoRow'>
+			<div id='toolDistance'>
+				<b>Measuring Length:</b>
+			</div>
+			<div id='toolWidth'>
+				Measuring Width:
+			</div>
+			<div id='toolHeight'>
+				Measuring Depth:
+			</div>
+		</div> -->
+	</div>
+	<div id='changeTools'>
+		<button id='elementMode' class='modeSwitch' value=0 style='border-bottom-style: solid'>Edit Elements</button>
+		<button id='roomMode' class='modeSwitch' value=1>Edit Room</button>
+		<button id='measureMode' class='modeSwitch' value=2>Measuring Tool</button>
+	</div>
+	<script src='sketch.js'></script>
+	<iframe src='../iframe/iframe.html'></iframe>
+	<!--<footer>
+		<b>Created by Julian Bundy</b><br>
+		<a href='https://sylintbundy.github.io/capstonePortfolio/'>View my online portfolio here!</a><br>
+		<b>Phone:</b> +1 (608) 515-7477<br>
+		<b>eMail:</b> juliangbundy@icloud.com<br>
+	</footer>-->
+	<script src='editpage.js'></script>
+</body>
+</html>
