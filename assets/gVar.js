@@ -9,7 +9,9 @@ let editingPage = null;
 let rm = {n: "Default Room", e: [], s: {w: 720, h: 600}};
 // If the browser doesn't support storage, turn this to true. Can be turn on manually for testing.
 let offline = false;
-
+// GitHub merges the pages into one domain, but can't work with PostMessage API, so systems have to be different.
+// Turn this on if the pages share a domain, otherwise turn it off.
+let githubMode = false;
 // Table of elements. sketch.js handles the drawing.
 const elements = [
 	["Rectangle (12x12in)", 60, 60, "Rectangle"],
@@ -67,37 +69,52 @@ if (typeof(Storage) == "undefined" && !offline) {
 
 function iSave() {
 	if (!offline) {
-		var iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage({action: 'save', key: 'fullData', value: JSON.stringify(fullData)}, '*');
+		if (githubMode) {
+			window.localStorage.setItem("fullData", JSON.stringify(fullData));
+		}
+		else {
+			var iframe = document.querySelector('iframe');
+			iframe.contentWindow.postMessage({action: 'save', key: 'fullData', value: JSON.stringify(fullData)}, '*');
+		}
 	}
 	else console.warn("Saving failed because the page is in offline mode.");
 }
 
 function iLoad() {
 	if (!offline) {
-		var iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage({action: 'get', key: 'fullData'}, '*');
+		if (githubMode) {
+			var data = JSON.parse(window.localStorage.getItem("fullData"));
+			if (data != null) {
+				handleLoad(data);
+			}
+		}
+		else {
+			var iframe = document.querySelector('iframe');
+			iframe.contentWindow.postMessage({action: 'get', key: 'fullData'}, '*');
+		}
 	}
 	else console.warn("Loading failed because the page is in offline mode.");
+}
+
+function handleLoad(data) {
+	var names = data.dataNames;
+	for (var name of names) {
+		fullData.dataNames.push(name);
+		fullData[name] = data[name];
+		if (name == editingPage) {
+			rm = fullData[name];
+		}
+	}
+	if (pageNumber == 1) {
+		refreshList();
+	}
 }
 
 function messageHandler(event) {
 	const {action, key, value} = event.data;
 	if (action == 'returnData') {
 		if (key == 'fullData' && value != null) {
-			var retrievedData = JSON.parse(value);
-			var names = retrievedData.dataNames;
-			for (var name of names) {
-				fullData.dataNames.push(name);
-				fullData[name] = retrievedData[name];
-				if (name == editingPage) {
-					rm = fullData[name];
-				}
-			}
-			// Confirms we're on the homepage
-			if (pageNumber == 1) {
-				refreshList();
-			}
+			handleLoad(JSON.parse(value));
 		}
 	}
 }
