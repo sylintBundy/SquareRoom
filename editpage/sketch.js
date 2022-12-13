@@ -1,5 +1,7 @@
 // Sets up and continuously draws the canvas, and handles all click events.
 
+let firstLoop = true;
+
 function setup() {
 	var space = rm.s;
 	var cnv = createCanvas(space.w, space.h);
@@ -18,8 +20,6 @@ function draw() {
 	for (var i = 0; i < elementList.length; i++) {
 		var element = elementList[i];
 		var shapeType;
-		var shapeWidth;
-		var shapeDepth;
 		push();
 		noStroke();
 		translate(element.px, element.py);
@@ -29,15 +29,13 @@ function draw() {
 		for (var shape of elements) {
 			if (shape[0] == element.s) {
 				shapeType = shape[3];
-				shapeWidth = shape[1];
-				shapeDepth = shape[2];
 			}
 		}
 		if (shapeType == "Rectangle") {
-			rect(0, 0, element.sx * shapeWidth, element.sy * shapeDepth);
+			rect(0, 0, element.sx, element.sy);
 		}
 		else if (shapeType == "Ellipse") {
-			ellipse(0, 0, element.sx * shapeWidth, element.sy * shapeDepth);
+			ellipse(0, 0, element.sx, element.sy);
 		}
 		pop();
 		// If the element is selected, create a highlighter box and measuring text
@@ -46,8 +44,8 @@ function draw() {
 			noFill();
 			translate(element.px, element.py);
 			rotate(element.r);
-			strokeWeight(5);
-			rect(0,0, element.sx * shapeWidth, element.sy * shapeDepth);
+			strokeWeight(2);
+			rect(0,0, element.sx, element.sy);
 			pop();
 		}
 	}
@@ -65,8 +63,11 @@ function draw() {
 		var dist = Math.sqrt(Math.pow(Math.abs(mouseX - clickPos.x), 2) + Math.pow(Math.abs(mouseY - clickPos.y), 2)) / 5;
 		dist = dist.toFixed(2);
 		document.getElementById('toolDistance').innerHTML = "<b>Measuring Length:</b> " + dist + "in";
-		document.getElementById('toolWidth').innerHTML = "Measuring Width: " + abs(mouseX - clickPos.x) / 5 + "in";
-		document.getElementById('toolHeight').innerHTML = "Measuring Depth: " + abs(mouseY - clickPos.y) / 5 + "in";
+	}
+	// Resize the canvas now that 
+	if (firstLoop) {
+		resizeCanvas(rm.s.w, rm.s.h);
+		firstLoop = false;
 	}
 }
 
@@ -117,9 +118,10 @@ function mouseDragged() {
 }
 
 function reshapeRoom() {
-	rm.s.w = parseFloat(document.getElementById('widthField').value) * 5;
-	rm.s.h = parseFloat(document.getElementById('depthField').value) * 5;
-	rm.s.d = parseFloat(document.getElementById('doorField').value) * 5;
+	if (document.getElementById('widthField') != null) {
+		rm.s.w = parseFloat(document.getElementById('widthField').value) * 5;
+		rm.s.h = parseFloat(document.getElementById('depthField').value) * 5;
+	}
 	resizeCanvas(rm.s.w, rm.s.h);
 	for (var element of rm.e) {
 		enforceBounds(element);
