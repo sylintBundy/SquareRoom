@@ -12,6 +12,8 @@ let offline = false;
 // GitHub merges the pages into one domain, but can't work with PostMessage API, so systems have to be different.
 // Turn this on if the pages share a domain, otherwise turn it off.
 let githubMode = true;
+// Forces the program to wait .2 seconds before determining if data is available.
+// const waitForData = setTimeout(checkForData, 300);
 // Table of elements. sketch.js handles the drawing.
 const elements = [
 	["Rectangle (12x12in)", 60, 60, "Rectangle"],
