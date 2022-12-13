@@ -1,26 +1,29 @@
 // Handles the responsive UI of the homepage, and contains calls to editing page.
 
+pageNumber = 1;
 let roomMenu = document.getElementById('roomMenu');
 
 $(function() {
 	pageSetup();
 	$('#createRoom').on('click', addPrompt);
+	$('#tempEditor').on('click', toTempEdit);
 })
 
 function pageSetup() {
 	iLoad();
+	refreshList();
 }
 
 function refreshList() {
 	clearList();
-	if (databaseNames.e == null || databaseNames.e.length == 0) {
+	if (fullData.dataNames == null || fullData.dataNames.length == 0) {
 		var nrText = document.createElement('p');
 		nrText.textContent = 'Looks like you have no rooms! Create one with the "+" button above.';
 		nrText.setAttribute('id', 'noroom');
 		nrText.setAttribute('style', 'text-align:center');
 		roomMenu.appendChild(nrText);
 	} else {
-		for (var room of databaseNames.e) {
+		for (var room of fullData.dataNames) {
 			var roomBox = document.createElement('div');
 			roomBox.setAttribute('class', 'listedRoom');
 			var nameLabel = document.createElement('label');
@@ -63,14 +66,14 @@ function linkToEdit(t) {
 	var target = t.target;
 	if (target.id == 'editBtn') {
 		var roomName = target.parentElement.parentElement.firstElementChild.textContent;
-		for (var room of databaseRooms) {
-			if (room.n == roomName) {
-				room.editing = true;
-			}
-		}
-		iSave();
-		window.location.href = "editpage/index.html";
+		var parameters = new URLSearchParams();
+		parameters.append("editingRoom", roomName);
+		location.href = "editpage/index.html?" + parameters.toString();
 	}
+}
+
+function toTempEdit() {
+	location.href = "editpage/index.html";
 }
 
 roomMenu.addEventListener('click', function(t) {linkToEdit(t)});
