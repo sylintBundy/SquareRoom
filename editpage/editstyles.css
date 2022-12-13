@@ -23,6 +23,16 @@
 	float: left;
 }
 
+#addBtn {
+	margin-left: 5%;
+	width: 15%;
+}
+
+#rmvBtn {
+	margin-left: 5%;
+	width: 15%;
+}
+
 .editRow > div {
 	float: left;
 	width: 25%;
@@ -59,10 +69,20 @@
 	left: 10%;
 }
 
+.editRow2 > div {
+	float: left;
+	width: 50%;
+}
+
+.editRow2 > div > * {
+	position: relative;
+	width: 80%;
+	left: 10%;
+}
+
 #infoRow > div {
 	position: relative;
-	float: left;
-	width: 25%;
+	width: 100%;
 }
 
 #changeTools {
