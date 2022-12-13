@@ -11,12 +11,6 @@ function messageHandler(event) {
 		}
 		else event.source.postMessage({action: 'returnData', key: key, value: null}, '*');
 	}
-	else if (action == 'delete') {
-		if (window.localStorage.getItem(key) != null) {
-			window.localStorage.removeItem(key);
-		}
-		window.localStorage.removeItem(key);
-	}
 	else console.error(action + " is not a valid action to iframe.");
 }
 
