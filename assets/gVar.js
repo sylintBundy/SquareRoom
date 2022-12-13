@@ -1,8 +1,12 @@
 // Handles all functions of data persistence, and contains element and color data.
 
 // The global variable for all data of each of the user's rooms.
+let fullData = {dataNames: []};
 let databaseRooms = [];
 let	databaseNames = {e: []};
+let pageNumber = null;
+let editingPage = null;
+let rm = {n: "Default Room", e: [], s: {w: 720, h: 600}};
 // If the browser doesn't support storage, turn this to true. Can be turn on manually for testing.
 let offline = false;
 
@@ -17,12 +21,24 @@ const elements = [
 	["Queen-size Bed (60x80in)", 300, 400, "Rectangle"],
 	["Olympic Queen-size Bed (66x80in)", 330, 400, "Rectangle"],
 	["King-size Bed (76x80in)", 380, 400, "Rectangle"],
-	["California King-size Bed ()", 360, 420, "Rectangle"],
+	["California King-size Bed (72x84in)", 360, 420, "Rectangle"],
+	["Common Crib (28x52in)", 140, 260, "Rectangle"],
+	["Standard Three-Seat Sofa (84x40in)", 420, 200, "Rectangle"],
+	["Loveseat (52x33in)", 260, 165, "Rectangle"],
 	["Small Floating Office Desk (48x24in)", 240, 120, "Rectangle"],
 	["Medium Floating Office Desk (60x30in)", 300, 150, "Rectangle"],
 	["Large Floating Office Desk (72x36in)", 360, 180, "Rectangle"],
-	["Paper Shredder (15x9in)", 75, 45, "Rectangle"],
-	["Filing Cabinet (15x29in)", 75, 145, "Rectangle"]
+	["Common Printer (18x24in)", 90, 120, "Rectangle"],
+	["Common Paper Shredder (15x9in)", 75, 45, "Rectangle"],
+	["Letter-Size Filing Cabinet (15x29in)", 75, 145, "Rectangle"],
+	["Legal-Size Filing Cabinet (18x29in)", 90, 145, "Rectangle"],
+	["Lateral Filing Cabinet (30x18in)", 150, 90, "Rectangle"],
+	["Small Flat Filing Cabinet (38x26in)", 190, 130, "Rectangle"],
+	["Medium Flat Filing Cabinet (44x32in)", 220, 160, "Rectangle"],
+	["Large Flat Filing Cabinet (50x38in)", 250, 190, "Rectangle"],
+	["Small Drafting Board (48x30in)", 240, 150, "Rectangle"],
+	["Medium Drafting Board (60x36in)", 300, 180, "Rectangle"],
+	["Large Drafting Board (72x42in)", 360, 210, "Rectangle"]
 	];
 
 // Table of colors to use
@@ -52,59 +68,43 @@ if (typeof(Storage) == "undefined" && !offline) {
 function iSave() {
 	if (!offline) {
 		var iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage({action: 'save', key: 'dataNames', value: JSON.stringify(databaseNames)}, '*');
-		if (databaseRooms.length != 0) {
-			for (var room of databaseRooms) {
-				iframe.contentWindow.postMessage({action: 'save', key: room.n, value: JSON.stringify(room)}, '*');
-			}
-		}
+		iframe.contentWindow.postMessage({action: 'save', key: 'fullData', value: JSON.stringify(fullData)}, '*');
 	}
-	else console.error("Saving failed because the page is in offline mode.");
+	else console.warn("Saving failed because the page is in offline mode.");
 }
 
 function iLoad() {
 	if (!offline) {
 		var iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage({action: 'get', key: 'dataNames'}, '*');
+		iframe.contentWindow.postMessage({action: 'get', key: 'fullData'}, '*');
 	}
-	else console.error("Loading failed because the page is in offline mode.");
-}
-
-function iDelete(room) {
-	if (!offline) {
-		var iframe = document.querySelector('iframe');
-		iframe.contentWindow.postMessage({action: 'delete', key: room}, '*')
-	}
+	else console.warn("Loading failed because the page is in offline mode.");
 }
 
 function messageHandler(event) {
 	const {action, key, value} = event.data;
 	if (action == 'returnData') {
-		if (key == 'dataNames' && value != null) {
-			databaseNames = JSON.parse(value);
-			var iframe = document.querySelector('iframe');
-			for (var name of databaseNames.e) {
-				iframe.contentWindow.postMessage({action: 'get', key: name}, '*');
+		if (key == 'fullData' && value != null) {
+			var retrievedData = JSON.parse(value);
+			var names = retrievedData.dataNames;
+			for (var name of names) {
+				fullData.dataNames.push(name);
+				fullData[name] = retrievedData[name];
+				if (name == editingPage) {
+					rm = fullData[name];
+				}
 			}
-			if ($('#roomMenu') != null) {
+			// Confirms we're on the homepage
+			if (pageNumber == 1) {
 				refreshList();
 			}
-			else {
-
-			}
-		}
-		else if (key == 'dataNames' && value == null) {
-			// Nothing happens here.
-		}
-		else {
-			databaseRooms.push(value);
 		}
 	}
 }
 
 function addPrompt() {
 	var nm = prompt("Enter your room name:", "New Room");
-	if (nm != null && nm != "" && !checkRoomExists(nm) && nm != "dataNames") {
+	if (nm != null && nm != "" && !checkRoomExists(nm) && nm != "dataNames" && nm != "selectedRoom") {
 		createRoom(nm);
 	}
 	else if (checkRoomExists(nm)) {
@@ -113,12 +113,14 @@ function addPrompt() {
 	else if (nm == "dataNames") {
 		window.alert("dataNames is an internal name that can't be used.");
 	}
+	else if (nm == "selectedRoom") {
+		window.alert("selectedRoom is an internal name that can't be used.");
+	}
 }
 
 function createRoom(name) {
-	databaseNames.e.push(name);
-	var databaseRoom = {n: name, e: [], s: {w: 144, h: 120}, editing: false};
-	databaseRooms.push(databaseRoom);
+	fullData.dataNames.push(name);
+	fullData[name] = {n: name, e: [], s: {w: 720, h: 600}};
 	if (!offline) {
 		iSave();
 	}
@@ -138,26 +140,19 @@ function deletePrompt(t) {
 }
 
 function deleteRoom(name) {
-	iDelete(name);
-	for (var i = 0; i < databaseNames.e.length; i++) {
-		if (databaseNames.e[i] == name) {
-			databaseNames.e.splice(i, 1);
+	for (var i = 0; i < fullData.dataNames.length; i++) {
+		if (fullData.dataNames[i] == name) {
+			fullData.dataNames.splice(i, 1);
 		}
 	}
-	for (var i = 0; i < databaseRooms.length; i++) {
-		if (databaseRooms[i].n == name) {
-			databaseRooms.splice(i, 1);
-		}
-	}
+	delete fullData[name];
 	iSave();
 	refreshList();
 }
 
 function checkRoomExists(name) {
-	for (var room of databaseNames.e) {
-		if (room == name) {
-			return true;
-		}
+	if (fullData[name] != null) {
+		return true;
 	}
 	return false;
 }
