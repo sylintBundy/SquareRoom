@@ -30,6 +30,17 @@ h2 {
 	left: 10px;
 }
 
+#topMenu > button {
+	height: 30px;
+	min-width: 80px;
+	position: relative;
+	float: right;
+	top: 10px;
+	right: 10px;
+	font-size: 20px;
+	margin-left: 5px;
+}
+
 button {
 	background-color: #deb887;
 	border-color: #c4a377;
@@ -39,17 +50,6 @@ button {
 button:hover {
 	background-color: #c4a377;
 	border-color: #ab8e68;
-}
-
-#newRoom {
-	width: 15%;
-	min-width: 150px;
-	height: 30px;
-	position: relative;
-	float: right;
-	top: 10px;
-	right: 10px;
-	font-size: 20px;
 }
 
 iframe {
